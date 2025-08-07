@@ -1,0 +1,141 @@
+-- Services
+local TweenService = game:GetService("TweenService")
+
+-- Couleurs
+local backgroundColor = Color3.fromRGB(20, 20, 20)
+local sidebarColor = Color3.fromRGB(15, 15, 15)
+local buttonColor = Color3.fromRGB(60, 60, 60)
+local buttonHoverColor = Color3.fromRGB(90, 90, 90)
+local textColor = Color3.fromRGB(255, 255, 255)
+
+-- Chargement Stylé
+local loadingGui = Instance.new("ScreenGui", game.CoreGui)
+loadingGui.Name = "EffexeLoading"
+
+local loadingFrame = Instance.new("Frame", loadingGui)
+loadingFrame.Size = UDim2.new(0, 350, 0, 100)
+loadingFrame.Position = UDim2.new(0.5, -175, 0.5, -50)
+loadingFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+loadingFrame.BorderSizePixel = 0
+
+local corner = Instance.new("UICorner", loadingFrame)
+corner.CornerRadius = UDim.new(0, 10)
+
+local text = Instance.new("TextLabel", loadingFrame)
+text.Size = UDim2.new(1, 0, 1, 0)
+text.BackgroundTransparency = 1
+text.Text = "Effexe Admin Edition\nLoading..."
+text.TextColor3 = textColor
+text.Font = Enum.Font.GothamBold
+text.TextSize = 20
+text.TextWrapped = true
+
+wait(2)
+loadingGui:Destroy()
+
+-- Main UI
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "EffexeAdminEdition"
+gui.ResetOnSpawn = false
+
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 500, 0, 300)
+main.Position = UDim2.new(0.5, -250, 0.5, -150)
+main.BackgroundColor3 = backgroundColor
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+
+local mainCorner = Instance.new("UICorner", main)
+mainCorner.CornerRadius = UDim.new(0, 8)
+
+-- Sidebar
+local sidebar = Instance.new("Frame", main)
+sidebar.Size = UDim2.new(0, 120, 1, 0)
+sidebar.Position = UDim2.new(0, 0, 0, 0)
+sidebar.BackgroundColor3 = sidebarColor
+sidebar.BorderSizePixel = 0
+
+local sidebarTitle = Instance.new("TextLabel", sidebar)
+sidebarTitle.Size = UDim2.new(1, 0, 0, 40)
+sidebarTitle.Position = UDim2.new(0, 0, 0, 10)
+sidebarTitle.Text = "Main"
+sidebarTitle.Font = Enum.Font.GothamBold
+sidebarTitle.TextSize = 18
+sidebarTitle.TextColor3 = textColor
+sidebarTitle.BackgroundTransparency = 1
+
+local playerNameLabel = Instance.new("TextLabel", sidebar)
+playerNameLabel.Size = UDim2.new(1, -10, 0, 30)
+playerNameLabel.Position = UDim2.new(0, 5, 0, 55)
+playerNameLabel.BackgroundTransparency = 1
+playerNameLabel.TextColor3 = textColor
+playerNameLabel.Font = Enum.Font.Gotham
+playerNameLabel.TextSize = 14
+playerNameLabel.TextWrapped = true
+playerNameLabel.TextXAlignment = Enum.TextXAlignment.Center
+playerNameLabel.Text = "Pseudo: "..game.Players.LocalPlayer.Name
+
+-- Button container
+local buttonContainer = Instance.new("Frame", main)
+buttonContainer.Size = UDim2.new(1, -130, 1, -30)
+buttonContainer.Position = UDim2.new(0, 130, 0, 20)
+buttonContainer.BackgroundTransparency = 1
+
+local layout = Instance.new("UIListLayout", buttonContainer)
+layout.Padding = UDim.new(0, 10)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.VerticalAlignment = Enum.VerticalAlignment.Top
+
+-- Fonction création bouton stylé simple
+local function createStyledButton(text, callback)
+    local btn = Instance.new("TextButton", buttonContainer)
+    btn.Size = UDim2.new(0, 300, 0, 40)
+    btn.BackgroundColor3 = buttonColor
+    btn.BorderSizePixel = 0
+    btn.Font = Enum.Font.Gotham
+    btn.Text = text
+    btn.TextSize = 16
+    btn.TextColor3 = textColor
+
+    local btnCorner = Instance.new("UICorner", btn)
+    btnCorner.CornerRadius = UDim.new(0, 6)
+
+    -- Hover effect
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = buttonHoverColor}):Play()
+    end)
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = buttonColor}):Play()
+    end)
+
+    btn.MouseButton1Click:Connect(callback)
+end
+
+-- Boutons
+createStyledButton("Bypass Adonis", function()
+    warn("[EFFEXE] ⚠️ Ce script nécessite un exécuteur niveau 8 (ex: Synapse X)")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/enzoisgod/adonis/refs/heads/main/adonis%20bypass"))()
+end)
+
+createStyledButton("Bypass HD Admin", function()
+    warn("[EFFEXE] Bypass HD Admin lancé.")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/enzoisgod/adonis/refs/heads/main/bypass%20HD%20ADMIN"))()
+end)
+
+createStyledButton("Add HD Admin (BETA)", function()
+    warn("[EFFEXE] Ajout de HD Admin (BETA)…")
+    loadstring(game:HttpGet("https://pastebin.com/raw/gnEt5xtA"))()
+end)
+
+-- Signature
+local sig = Instance.new("TextLabel", main)
+sig.Size = UDim2.new(0, 200, 0, 20)
+sig.Position = UDim2.new(1, -200, 1, -20)
+sig.Text = "by enzoisgod"
+sig.Font = Enum.Font.Gotham
+sig.TextSize = 14
+sig.TextColor3 = Color3.fromRGB(120, 120, 120)
+sig.BackgroundTransparency = 1
+sig.TextXAlignment = Enum.TextXAlignment.Right
